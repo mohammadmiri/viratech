@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<title>RestProj</title>
+
+<!-- bower:css -->
+<link href="app/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="app/lib/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" rel="stylesheet">
+<link href="app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="app/lib/vtCommon/vtDatePicker/style.css" rel="stylesheet">
+<link href="app/lib/vtCommon/vtSearch/style.css" rel="stylesheet">
+<link href="app/lib/vtCommon/vtMessageShower/style.css" rel="stylesheet">
+<link href="app/lib/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
+<!-- endbower -->
+<!-- ------------------------------------------ ADD ALL CSS FILE OF PROJECT HERE ------------------------------------------------ -->
+<!-- build:css style.css -->
+<link href="app/assets/css/font.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/tab.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/base.css" rel="stylesheet" media="screen">
+<link href="app/assets/css/bootstrap.css" rel="stylesheet" media="screen">
+<!-- endbuild -->
+
+
+<!-- bower:js -->
+<script src="app/lib/angular/angular.js"></script>
+<script src="app/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="app/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="app/lib/jquery/dist/jquery.min.js"></script>
+<script src="app/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="app/lib/lodash/dist/lodash.compat.min.js"></script>
+<script src="app/lib/restangular/dist/restangular.min.js"></script>
+<script src="app/lib/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js"></script>
+<script src="app/lib/angular-animate/angular-animate.min.js"></script>
+<script src="app/lib/AngularJS-Toaster/toaster.min.js"></script>
+<script src="app/lib/momentjs/min/moment.min.js"></script>
+<script src="app/lib/moment-jalaali/build/moment-jalaali.js"></script>
+<!-- commons -->
+<script src="app/lib/vtCommon/vtFilter/checkmarkFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/commonFilterModule.js"></script>
+<script src="app/lib/vtCommon/vtFilter/EnToFaNumberFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/EnToFaButtonFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/FaToEnNumberFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/jalaliDateFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/jalaliDateJustDateFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/jalaliDatePastFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/sliceFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/stringFilter.js"></script>
+<script src="app/lib/vtCommon/vtFilter/commonFilterModule.js"></script>
+<script src="app/lib/vtCommon/vtSearch/searchModule.js"></script>
+<script src="app/lib/vtCommon/vtSearch/searchSrvc.js"></script>
+<script src="app/lib/vtCommon/vtSearch/searchDirective.js"></script>
+<script src="app/lib/vtCommon/vtGrid/gridDirective.js"></script>
+<script src="app/lib/vtCommon/vtMessageShower/vtMessageShower.js"></script>
+<script src="app/lib/vtCommon/vtPersianDatePicker/vtPersianDatePickerDirective.js"></script>
+<script src="app/lib/vtCommon/vtDatePicker/persian-datepicker-tpls.js"></script>
+<script src="app/lib/vtCommon/vtDatePicker/persiandate.js"></script>
+<script src="app/lib/vtCommon/vtDirectives/accessChecker/accessCheckerDirective.js"></script>
+<script src="app/lib/vtCommon/vtCommons.js"></script>
+<!-- endbower -->
+
+<!-- ------------------------------------------ ADD ALL JS FILE OF PROJECT HERE ------------------------------------------------ -->
+<!-- build:js assets/lib.js -->
+<!-- FILTERS -->
+ <script src="app/assets/js/filters/filterModule.js"></script> 
+ <script src="app/assets/js/filters/appEnum.js"></script> 
+<!--  CONFIGURATION  -->
+<script src="app/modules/restProj/config/config.js"></script>
+<script src="app/modules/restProj/config/run.js"></script>
+<script src="app/modules/restProj/config/configMenuConst.js"></script>
+<script src="app/modules/restProj/config/configRouteConst.js"></script>
+<script src="app/modules/restProj/config/configSrvc.js"></script>
+<script src="app/modules/restProj/config/configStateConst.js"></script>
+<script src="app/modules/restProj/config/configModule.js"></script>
+<script src="app/modules/restProj/restProjSrvc.js"></script>
+
+
+<!-- HOME -->
+<script src="app/modules/home/homeSrvc.js"></script>
+<script src="app/modules/home/homeCtrl.js"></script>
+<script src="app/modules/home/changePassword/changePasswordCtrl.js"></script>
+<script src="app/modules/home/homeConfig.js"></script>
+<!-- MANAGEMENT -->
+<script src="app/modules/management/managementConfig.js"></script>
+<script src="app/modules/management/managementCtrl.js"></script>
+<!-- userrole -->
+<script src="app/modules/management/userrole/userroleSrvc.js"></script>
+<script src="app/modules/management/userrole/userroleConfig.js"></script>
+<script src="app/modules/management/userrole/userroleCtrl.js"></script>
+<!-- user -->
+<script src="app/modules/management/user/userSrvc.js"></script>
+<script src="app/modules/management/user/userConfig.js"></script>
+<script src="app/modules/management/user/userCtrl.js"></script>
+
+
+<script src="app/app.js"></script>
+
+
+<!-- endbuild -->
+
+</head>
+<body ui-view class="not-show-ui-until-ready-angular" ng-class="{'show-ui-after-ready-angular' : true}"></body>
+</html>
