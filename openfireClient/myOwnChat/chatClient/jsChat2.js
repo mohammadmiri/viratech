@@ -1,11 +1,11 @@
 var Gab = {
     connection: null,
-
+    jid_selected: null,
+    
     /*
      * used to convert the xml to html 
      */
     jid_to_id: function (jid) {
-    	console.log("in jid_to_id"+jid);
         return Strophe.getBareJidFromJid(jid)
             .replace(/@/g, "-")
             .replace(/\./g, "-");
@@ -15,9 +15,6 @@ var Gab = {
      * called when a roster is adding to the roster-list
      */
     on_roster: function (iq) {
-    	console.log("in on_roster"+String(iq.toString()));
-//    	throw "after on_roster";
-    	console.log("after throw");
         $(iq).find('item').each(function () {
         	console.log("in each function");
             var jid = $(this).attr('jid');
@@ -34,8 +31,6 @@ var Gab = {
                     		jid +
                     		"</div></div></li>");
             
-
-
             Gab.insert_contact(contact);
         });
 
@@ -53,10 +48,7 @@ var Gab = {
     /*
      * used to determine the availability of any user
      */
-    on_presence: function (presence) {
-    	console.log("in on_presence"+String(presence.innerHTML)+"\n type:"+$(presence).attr('type')+'\n presence:'+
-    			$(presence).attr('from'));
-    	
+    on_presence: function (presence) {    	
         var ptype = $(presence).attr('type');
         var from = $(presence).attr('from');
         var jid_id = Gab.jid_to_id(from);
@@ -96,10 +88,10 @@ var Gab = {
     },
 
     /*
-     * called when the user connected to server
+     * called when status of any contact changed
      */
     on_roster_changed: function (iq) {
-    	console.log("in on_roster_changed");
+//    	console.log("in on_roster_changed");
     	
         $(iq).find('item').each(function () {
             var sub = $(this).attr('subscription');
@@ -134,7 +126,7 @@ var Gab = {
     },
 
     /*
-     * called when a message should be send 
+     * called when a message received
      */
     on_message: function (message) {
     	console.log("on_message");
@@ -142,31 +134,29 @@ var Gab = {
         var full_jid = $(message).attr('from');
         var jid = Strophe.getBareJidFromJid(full_jid);
         var jid_id = Gab.jid_to_id(jid);
-
-        if ($('#chat-' + jid_id).length === 0) {
-            $('#chat-area').tabs('add', '#chat-' + jid_id, jid);
-            $('#chat-' + jid_id).append(
-                "<div class='chat-messages'></div>" +
-                "<input type='text' class='chat-input'>");
-        }
         
-        $('#chat-' + jid_id).data('jid', full_jid);
+        $('#chat-input').data('jid', full_jid);
 
-        $('#chat-area').tabs('select', '#chat-' + jid_id);
-        $('#chat-' + jid_id + ' input').focus();
+        $('#chat-input').focus();
 
+        /*
+         * used to find out that the user is typing or not
+         */
+        console.log("before composing");
         var composing = $(message).find('composing');
         if (composing.length > 0) {
-            $('#chat-' + jid_id + ' .chat-messages').append(
+            $("#person-status").append(
                 "<div class='chat-event'>" +
-                Strophe.getNodeFromJid(jid) +
+                //Strophe.getNodeFromJid(jid) +
                 " is typing...</div>");
-
-            Gab.scroll_chat(jid_id);
         }
 
+        
+        /*
+         * used to determine that the message contains a text or not
+         */
+        console.log("before find body");
         var body = $(message).find("html > body");
-
         if (body.length === 0) {
             body = $(message).find('body');
             if (body.length > 0) {
@@ -190,41 +180,29 @@ var Gab = {
             body = span;
         }
 
+        /*
+         * used to appending the body of message to chat-container
+         */
+        console.log("before if body condition");
         if (body) {
+        	console.log("in if body:"+body);
             // remove notifications since user is now active
-            $('#chat-' + jid_id + ' .chat-event').remove();
+            $('#person-info-wrapper #person-status').remove();
 
             // add the new message
-            $('#chat-' + jid_id + ' .chat-messages').append(
+            $("#message-wrapper").append(
                 "<div class='chat-message'>" +
-                "&lt;<span class='chat-name'>" +
+                "<p class='chat-name'>" +
                 Strophe.getNodeFromJid(jid) +
-                "</span>&gt;<span class='chat-text'>" +
-                "</span></div>");
-
-            $('#chat-' + jid_id + ' .chat-message:last .chat-text')
-                .append(body);
-
-            Gab.scroll_chat(jid_id);
+                "</p><p class='chat-text'>" +
+                body+
+                "</p></div>");
         }
 
         return true;
     },
 
-    /*
-     * used to scroll the messages-div
-     */
-    scroll_chat: function (jid_id) {
-    	console.log("in scroll_chat");
-    	
-        var div = $('#chat-' + jid_id + ' .chat-messages').get(0);
-        div.scrollTop = div.scrollHeight;
-    },
-
-
     presence_value: function (elem) {
-    	console.log("in presence_value");
-    	
         if (elem.hasClass('online')) {
             return 2;
         } else if (elem.hasClass('away')) {
@@ -234,9 +212,10 @@ var Gab = {
         return 0;
     },
 
+    /*
+     * used to insert a roster to roster-list 
+     */
     insert_contact: function (elem) {
-    	console.log("in insert_contact");
-    	
         var jid = elem.find('.roster-jid').text();
         var pres = Gab.presence_value(elem.find('.roster-contact'));
         
@@ -282,48 +261,6 @@ $(document).ready(function () {
         password: 'miri'
     });
 
-   
-
-    /*
-     * opens the new-contact-dialog
-     */
-    $('#new-contact').click(function (ev) {
-        $('#contact_dialog').dialog('open');
-    });
-
-    $('#approve_dialog').dialog({
-        autoOpen: false,
-        draggable: false,
-        modal: true,
-        title: 'Subscription Request',
-        buttons: {
-            "Deny": function () {
-                Gab.connection.send($pres({
-                    to: Gab.pending_subscriber,
-                    "type": "unsubscribed"}));
-                Gab.pending_subscriber = null;
-
-                $(this).dialog('close');
-            },
-
-            "Approve": function () {
-                Gab.connection.send($pres({
-                    to: Gab.pending_subscriber,
-                    "type": "subscribed"}));
-
-                Gab.connection.send($pres({
-                    to: Gab.pending_subscriber,
-                    "type": "subscribe"}));
-                
-                Gab.pending_subscriber = null;
-
-                $(this).dialog('close');
-            }
-        }
-    });
-
-    $('#chat-area').tabs().find('.ui-tabs-nav').sortable({axis: 'x'});
-
     /*
      * called when the user click on one of roster in roster-list
      * 
@@ -332,26 +269,16 @@ $(document).ready(function () {
     $('.roster-contact').live('click', function () {
     	console.log("in roster-contact click" + $(this).html());
     	
+    	$('#message-wrapper').empty();
     	$('.roster-contact').css("background-color","#ffffff");
     	$(this).css("background-color","#FF5733");
         var jid = $(this).find(".roster-jid").text();
         var name = $(this).find(".roster-name").text();
+        Gab.person_selected = name;
         var jid_id = Gab.jid_to_id(jid);
 
-//        if ($('#chat-' + jid_id).length === 0) {
-//            $('#chat-area').tabs('add', '#chat-' + jid_id, name);
-//            $('#chat-' + jid_id).append(
-//                "<div class='chat-messages'></div>" +
-//                "<input type='text' class='chat-input'>");
-//            $('#chat-' + jid_id).data('jid', jid);
-//        }
-//        $('#chat-area').tabs('select', '#chat-' + jid_id);
-//
-//        $('#chat-' + jid_id + ' input').focus();
-        
-//        $("message-wrapper").append(
-//        	"<div class='chat-message'></div>"	
-//        		);
+        $("#person-info-wrapper #person-name").empty();
+        $("#person-info-wrapper #person-name").append(name);
         $("#chat-input").data('jid', jid);
         
     });
@@ -378,13 +305,12 @@ $(document).ready(function () {
             Gab.connection.send(message);
 
             $("#message-wrapper").append(
-                "<div class='chat-message'>&lt;" +
+                "<div class='chat-message'>" +
                 "<p class='chat-name me'>" + 
                 Strophe.getNodeFromJid(Gab.connection.jid) +
                 "</p><p class='chat-text'>" +
                 body +
                 "</p></div>");
-            Gab.scroll_chat(Gab.jid_to_id(jid));
 
             $(this).val('');
             $(this).parent().data('composing', false);
@@ -401,51 +327,13 @@ $(document).ready(function () {
     });
 
     /*
-     * callde when the user click on disconnect button
-     * 
-     * should be removed later by mohammad
+     * called when the user click on disconnect button
      */
     $('#disconnect').click(function () {
         Gab.connection.disconnect();
         Gab.connection = null;
     });
 
-    /*
-     * called when the user click on the chat-with button
-     * 
-     *  should be removed later by mohammad
-     */
-    $('#chat_dialog').dialog({
-        autoOpen: false,
-        draggable: false,
-        modal: true,
-        title: 'Start a Chat',
-        buttons: {
-            "Start": function () {
-                var jid = $('#chat-jid').val().toLowerCase();
-                var jid_id = Gab.jid_to_id(jid);
-
-                $('#chat-area').tabs('add', '#chat-' + jid_id, jid);
-                $('#chat-' + jid_id).append(
-                    "<div class='chat-messages'></div>" +
-                    "<input type='text' class='chat-input'>");
-            
-                $('#chat-' + jid_id).data('jid', jid);
-            
-                $('#chat-area').tabs('select', '#chat-' + jid_id);
-                $('#chat-' + jid_id + ' input').focus();
-            
-            
-                $('#chat-jid').val('');
-                
-                $(this).dialog('close');
-            }
-        }
-    });
-
-    $('#new-chat').click(function () {
-        $('#chat_dialog').dialog('open');
-    });
 });
 
 /*
@@ -456,6 +344,7 @@ $(document).bind('connect', function (ev, data) {
 	
     var conn = new Strophe.Connection(
         'http://bosh.metajack.im:5280/xmpp-httpbind');
+    
 
     conn.connect(data.jid, data.password, function (status) {
         if (status === Strophe.Status.CONNECTED) {
@@ -496,32 +385,5 @@ $(document).bind('disconnected', function () {
 
     $('#login_dialog').dialog('open');
 });
-
-$(document).bind('contact_added', function (ev, data) {
-    var iq = $iq({type: "set"}).c("query", {xmlns: "jabber:iq:roster"})
-        .c("item", data);
-    Gab.connection.sendIQ(iq);
-    
-    var subscribe = $pres({to: data.jid, "type": "subscribe"});
-    Gab.connection.send(subscribe);
-});
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////// mohammad's code ////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
 
 

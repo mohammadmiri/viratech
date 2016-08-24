@@ -14,16 +14,19 @@
 <link type="text/css" href="chatClient/styleChat2.css" media="all" rel="stylesheet"/>
 <script src='chatClient/jsChat2.js'></script>
 
+
 </head>
 <body>
 
 <div id=main-container>
 	<div id=conversation-wrapper>
+		<div id="person-info-wrapper">
+			<span id="person-name"></span>
+			<span id="person-status"></span>
+		</div>
 		<div id="message-wrapper"></div>
 		<form>
 			<input id="chat-input" placeholder="write a message">
-			<button type="submit" id="send-message-btn" class="send-btn">send</button>
-			<button type="button" id="send-file-btn" class="send-btn">file</button> 
 		</form>
 	</div>
 	<div id=rosters-wrapper>
