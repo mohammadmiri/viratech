@@ -1,0 +1,134 @@
+html{
+	height: 100%;
+}
+
+body{
+	height: 100%;
+}
+
+
+#main-container{
+	height: 100%;
+	background-color: #00ffaa;
+	direction: rtl;
+	width: 70%;
+	margin: 0 auto;
+}
+
+#conversation-wrapper{
+	background-color: #00ff00;
+	display: inline-block;
+	height: 100%;
+	width: 64.5%;
+	float: right;
+}
+
+#rosters-wrapper{
+	background-color: #ff00ff;
+	display: inline-block;
+	height: 100%;
+	width: 35%;
+	overflow: hidden;
+	float: left;
+	border: solid 1px #00ffff; 
+}
+
+#roster-search-type{
+	width: 92%;
+	padding-left: 4%;
+	margin: 1% 1% 1% 1%;
+	height: 0.75cm;
+	font-size: 18px;
+	direction: ltr;
+	
+}
+
+#roster-list{
+	height: 90%;
+	width: 100%;
+	float: left;
+	display: inline-block;
+	background: #ffffff;
+	overflow: auto;
+}
+
+#roster-list::-webkit-scrollbar{
+	display: none;
+}
+
+.hidden{
+	display: none;	
+}
+
+#roster-list li{
+	list-style-type: none;
+	direction: ltr;
+	clear: both;
+}
+
+.roster-contact{
+	direction: ltr;
+	float: left;
+	margin-top: 0cm;
+	width: 98%;
+	text-align: left;
+	height: 1.5cm;
+	margin-right: 1%;
+	margin-left: 1%;
+	background-color: #ffffff;
+}
+
+
+.roster-name{
+	margin: 0.5cm 0 0 0.5cm;
+}
+
+#message-wrapper{
+	height: 93%;
+	width: 100%;
+	overflow: scroll;
+	background: #eeeeee;
+}
+
+#chat-input{
+	width: 80%;
+	height: 1cm;
+	direction: rtl;
+	font-size: 18px;
+	float: right;
+}
+
+.send-btn{
+	height: 1cm;
+	width: 9%;
+	float: right;
+	margin: 0.08cm 0.025cm 0 0.025cm;
+	font-size: 18px;
+	background: white;
+	border: 0;
+	color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

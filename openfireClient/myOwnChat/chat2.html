@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/cupertino/jquery-ui.css'/>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js'></script>
+<script src='chatClient/strophe.js'></script>
+<script src='chatClient/flXHR.js'></script>
+<script src='chatClient/strophe.flxhr.js'></script>
+
+<link type="text/css" href="chatClient/styleChat2.css" media="all" rel="stylesheet"/>
+<script src='chatClient/jsChat2.js'></script>
+
+</head>
+<body>
+
+<div id=main-container>
+	<div id=conversation-wrapper>
+		<div id="message-wrapper"></div>
+		<form>
+			<input id="chat-input" placeholder="write a message">
+			<button type="submit" id="send-message-btn" class="send-btn">send</button>
+			<button type="button" id="send-file-btn" class="send-btn">file</button> 
+		</form>
+	</div>
+	<div id=rosters-wrapper>
+		<input id="roster-search-type" type="text" placeholder="search roster">
+		<ul id="roster-list">
+			<li id="hamid_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            hamid
+                    </div>
+                </div>
+            </li>
+            <li id="mohammad_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            mohammad
+                    </div>
+                </div>
+            </li>
+            <li id="shahram_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            shahram
+                    </div>
+                </div>
+            </li>
+            <li id="sadjad_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            sadjad
+                    </div>
+                </div>
+            </li>
+            <li id="mohsen_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            mohsen
+                    </div>
+                </div>
+            </li>
+            <li id="sina_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            sina
+                    </div>
+                </div>
+            </li>
+            <li id="jafar_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            jafar
+                    </div>
+                </div>
+            </li>
+            <li id="hadi_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                           	hadi
+                    </div>
+                </div>
+            </li>
+            <li id="mahdi_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            mahdi
+                    </div>
+                </div>
+            </li>
+            <li id="yusef_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            yusef
+                    </div>
+                </div>
+            </li>
+            <li id="karim_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            karim
+                    </div>
+                </div>
+            </li>
+            <li id="mobin_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            mobin
+                    </div>
+                </div>
+            </li>
+            <li id="javad_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            javad
+                    </div>
+                </div>
+            </li>
+            <li id="ali_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            ali
+                    </div>
+                </div>
+            </li>
+            <li id="reza_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            reza
+                    </div>
+                </div>
+            </li>
+            <li id="naser_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                           	naser
+                    </div>
+                </div>
+            </li>
+            <li id="parviz_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            parviz
+                    </div>
+                </div>
+            </li>
+            <li id="shoghal_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            shoghal
+                    </div>
+                </div>
+            </li>
+            <li id="admad_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            ahmad
+                    </div>
+                </div>
+            </li>
+            <li id="shahriar_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            shahriar
+                    </div>
+                </div>
+            </li>
+            <li id="ehsan_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            ehsan
+                    </div>
+                </div>
+            </li>
+            <li id="hassan_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            hassan
+                    </div>
+                </div>
+            </li>
+            <li id="hosein_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                            hosein
+                    </div>
+                </div>
+            </li>
+            <li id="saeed_id">
+            	<div class="roster-contact offline">
+                	<div class="roster-name">
+                           	saeed
+                    </div>
+                </div>
+            </li>
+		</ul>
+	</div>
+</div>
+
+</body>
+</html>
