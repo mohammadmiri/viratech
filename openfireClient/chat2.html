@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv=\"Content-type\" content=\"text/html;charset=UTF-8\">
+<title>Insert title here</title>
+
+<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/cupertino/jquery-ui.css'/>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js'></script>
+<script src='chatClient/strophe.js'></script>
+<script src='chatClient/flXHR.js'></script>
+<script src='chatClient/strophe.flxhr.js'></script>
+
+<link type="text/css" href="chatClient/styleChat2.css" media="all" rel="stylesheet"/>
+<script src='chatClient/jsChat2.js'></script>
+
+<link type="text/css" href="chatClient/css/bootstrap.min.css" media="all" rel="stylesheet"/>
+<link type="text/css" href="chatClient/styleChat4.css" media="all" rel="stylesheet"/>
+
+</head>
+<body>
+
+<div id=main-container>
+	    <div id="chat-window">
+        	<div class="panel panel-default">
+                <div class="panel-heading top-bar">
+                       <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Chat - Miguel</h3>
+                </div>
+                <div class="panel-body msg_container_base">
+                    <div class="row msg_container base_sent">
+                        <div class="messages msg_sent">
+                            <p>that mongodb thing looks good, huh?
+                            tiny master db, and huge document store
+                            this is main content you want and main thing you should use</p>
+                        </div>
+                        <div class="avatar">
+                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                        </div>
+                    </div>
+                    <div class="row msg_container base_receive">
+                        <div class="avatar">
+                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                        </div>
+                        <div class="messages msg_receive">
+                            <p>that mongodb thing looks good, huh?
+                            tiny master db, and huge document store
+                            you can use it from anywhere that can be used for any thing
+                            this is all you need and all you want
+                            you should use it every time you like and it is better than you don't use it
+                            for any reason</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                        <span class="input-group-btn">
+                        <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+                        </span>
+                    </div>
+                </div>
+    		</div>
+	    </div>
+	    
+	<!--
+	<div id=conversation-wrapper>
+		<div id="person-info-wrapper">
+			<span id="person-name"></span>
+			<span id="person-jid" class="hidden"></span>
+			<span id="person-status"></span>
+		</div>
+		<div id="message-wrapper"></div>
+		<form>
+			<input id="chat-input" placeholder="write a message">
+		</form>
+	</div>
+	-->
+	<div id=rosters-wrapper>
+		<input id="roster-search-input" class="form-control input-sm" type="text" placeholder="search roster">
+		<ul id="roster-list">
+			
+		</ul>
+	</div>
+</div>
+
+</body>
+</html>

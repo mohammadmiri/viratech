@@ -1,0 +1,143 @@
+html{
+	height: 100%;
+}
+
+body{
+	height: 100%;
+	font-family: Helvetica;
+}
+
+#main-container{
+	height: 100%;
+	background-color: #00ffaa;
+	direction: rtl;
+	width: 70%;
+	margin: 0 auto;
+}
+
+#conversation-wrapper{
+	background-color: #00ff00;
+	display: inline-block;
+	height: 100%;
+	width: 64.5%;
+	direction: ltr;
+}
+
+#rosters-wrapper{
+	background-color: #f5f5f5;
+	display: inline-block;
+	height: 100%;
+	width: 35%;
+	overflow: hidden;
+	float: left;
+	border: solid 1px #dcdcdc; 
+}
+
+#roster-search-input{
+	width: 98%;
+	padding-left: 4%;
+	margin: 1% 1% 1% 1%;
+	height: 0.75cm;
+	font-size: 18px;
+	direction: ltr;
+}
+
+#roster-list{
+	height: 90%;
+	width: 100%;
+	float: left;
+	display: inline-block;
+	background: #f4ebff;
+	overflow: auto;
+}
+
+#roster-list::-webkit-scrollbar{
+	display: none;
+}
+
+.hidden{
+	display: none;	
+}
+
+#roster-list li{
+	list-style-type: none;
+	direction: ltr;
+	clear: both;
+}
+
+.roster-contact{
+	direction: ltr;
+	float: left;
+	margin-top: 0cm;
+	width: 100%;
+	text-align: left;
+	height: 1.5cm;
+	margin-right: 0;
+	margin-left: 1%;
+}
+
+
+.roster-name{
+	margin: 0.5cm 0 0 0.5cm;
+}
+
+#person-info-wrapper{
+	height: 9%;
+	width:100%;
+	background-color: #005500;
+}
+
+#message-wrapper{
+	height: 83%;
+	width: 100%;
+	overflow: scroll;
+	background: #eeeeee;
+	direction: ltr;
+}
+
+.chat-message{
+	border: solid 1px #5479F4;
+	border-radius: 0.5cm;
+	padding: 0.2cm;
+	width: 60%;
+	margin-top:0.2cm;
+}
+
+.chat-text{
+	
+}
+
+.me{
+	
+}
+
+.offline{
+	
+}
+
+.away{
+	
+}
+
+.online{
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

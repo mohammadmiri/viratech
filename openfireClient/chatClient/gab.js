@@ -1,14 +1,21 @@
 var Gab = {
     connection: null,
 
+    /*
+     * used to convert the xml to html 
+     */
     jid_to_id: function (jid) {
         return Strophe.getBareJidFromJid(jid)
             .replace(/@/g, "-")
             .replace(/\./g, "-");
     },
 
+    /*
+     * called when a roster is adding to the roster-list
+     */
     on_roster: function (iq) {
         $(iq).find('item').each(function () {
+        	console.log("in each function");
             var jid = $(this).attr('jid');
             var name = $(this).attr('name') || jid;
 
@@ -31,9 +38,16 @@ var Gab = {
         Gab.connection.send($pres());
     },
 
+    /*
+     * should be find out by mohammad
+     */
     pending_subscriber: null,
 
+    /*
+     * used to determine the availability of any user
+     */
     on_presence: function (presence) {
+    	
         var ptype = $(presence).attr('type');
         var from = $(presence).attr('from');
         var jid_id = Gab.jid_to_id(from);
@@ -72,7 +86,11 @@ var Gab = {
         return true;
     },
 
+    /*
+     * called when the user connected to server
+     */
     on_roster_changed: function (iq) {
+    	
         $(iq).find('item').each(function () {
             var sub = $(this).attr('subscription');
             var jid = $(this).attr('jid');
@@ -105,11 +123,17 @@ var Gab = {
         return true;
     },
 
+    /*
+     * called when a message should be send 
+     */
     on_message: function (message) {
+    	console.log("on_message");
+    	console.log("khodam on_message #######################################");
+    	
         var full_jid = $(message).attr('from');
         var jid = Strophe.getBareJidFromJid(full_jid);
         var jid_id = Gab.jid_to_id(jid);
-
+        
         if ($('#chat-' + jid_id).length === 0) {
             $('#chat-area').tabs('add', '#chat-' + jid_id, jid);
             $('#chat-' + jid_id).append(
@@ -133,17 +157,24 @@ var Gab = {
         }
 
         var body = $(message).find("html > body");
-
+        
+        console.log("khodam body: "+body);
+        
         if (body.length === 0) {
             body = $(message).find('body');
+            console.log("khodam body1: "+body);
             if (body.length > 0) {
                 body = body.text()
+                console.log("khodam body2: "+body);
             } else {
                 body = null;
             }
         } else {
+        	console.log("khodam body.text: "+body.text()+" **********************************");
             body = body.contents();
-
+            
+            console.log("khodam body3: "+body);
+            
             var span = $("<span></span>");
             body.each(function () {
                 if (document.importNode) {
@@ -155,6 +186,7 @@ var Gab = {
             });
 
             body = span;
+            console.log("khodam body4: "+body);
         }
 
         if (body) {
@@ -171,6 +203,7 @@ var Gab = {
 
             $('#chat-' + jid_id + ' .chat-message:last .chat-text')
                 .append(body);
+            console.log("khodam body5: "+body);
 
             Gab.scroll_chat(jid_id);
         }
@@ -178,13 +211,20 @@ var Gab = {
         return true;
     },
 
+    /*
+     * used to scroll the messages-div
+     */
     scroll_chat: function (jid_id) {
+    	console.log("in scroll_chat");
+    	
         var div = $('#chat-' + jid_id + ' .chat-messages').get(0);
         div.scrollTop = div.scrollHeight;
     },
 
 
     presence_value: function (elem) {
+    	console.log("in presence_value");
+    	
         if (elem.hasClass('online')) {
             return 2;
         } else if (elem.hasClass('away')) {
@@ -195,6 +235,8 @@ var Gab = {
     },
 
     insert_contact: function (elem) {
+    	console.log("in insert_contact");
+    	
         var jid = elem.find('.roster-jid').text();
         var pres = Gab.presence_value(elem.find('.roster-contact'));
         
@@ -229,6 +271,9 @@ var Gab = {
     }
 };
 
+/*
+ * called at first, when the page loaded
+ */
 $(document).ready(function () {
     $('#login_dialog').dialog({
         autoOpen: true,
@@ -248,6 +293,9 @@ $(document).ready(function () {
         }
     });
 
+    /*
+     * called when the user clicked on add-contact button
+     */
     $('#contact_dialog').dialog({
         autoOpen: false,
         draggable: false,
@@ -268,6 +316,9 @@ $(document).ready(function () {
         }
     });
 
+    /*
+     * opens the new-contact-dialog
+     */
     $('#new-contact').click(function (ev) {
         $('#contact_dialog').dialog('open');
     });
@@ -305,6 +356,11 @@ $(document).ready(function () {
 
     $('#chat-area').tabs().find('.ui-tabs-nav').sortable({axis: 'x'});
 
+    /*
+     * called when the user click on one of roster in roster-list
+     * 
+     * should be modified later by mohammad
+     */
     $('.roster-contact').live('click', function () {
         var jid = $(this).find(".roster-jid").text();
         var name = $(this).find(".roster-name").text();
@@ -322,6 +378,11 @@ $(document).ready(function () {
         $('#chat-' + jid_id + ' input').focus();
     });
 
+    /*
+     * called when the user start typing in input-chat
+     * 
+     * should be modified later by mohammad
+     */
     $('.chat-input').live('keypress', function (ev) {
         var jid = $(this).parent().data('jid');
 
@@ -359,11 +420,21 @@ $(document).ready(function () {
         }
     });
 
+    /*
+     * callde when the user click on disconnect button
+     * 
+     * should be removed later by mohammad
+     */
     $('#disconnect').click(function () {
         Gab.connection.disconnect();
         Gab.connection = null;
     });
 
+    /*
+     * called when the user click on the chat-with button
+     * 
+     *  should be removed later by mohammad
+     */
     $('#chat_dialog').dialog({
         autoOpen: false,
         draggable: false,
@@ -397,7 +468,12 @@ $(document).ready(function () {
     });
 });
 
+/*
+ * called when event connect occurred
+ */
 $(document).bind('connect', function (ev, data) {
+	console.log("in connect bind");
+	
     var conn = new Strophe.Connection(
         'http://bosh.metajack.im:5280/xmpp-httpbind');
 
@@ -412,7 +488,12 @@ $(document).bind('connect', function (ev, data) {
     Gab.connection = conn;
 });
 
+/*
+ * called when the user connected to server 
+ */
 $(document).bind('connected', function () {
+	console.log("connected");
+	
     var iq = $iq({type: 'get'}).c('query', {xmlns: 'jabber:iq:roster'});
     Gab.connection.sendIQ(iq, Gab.on_roster);
 
@@ -424,6 +505,8 @@ $(document).bind('connected', function () {
 });
 
 $(document).bind('disconnected', function () {
+	console.log("disconnected");
+	
     Gab.connection = null;
     Gab.pending_subscriber = null;
 
