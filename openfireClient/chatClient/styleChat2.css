@@ -63,6 +63,7 @@ body{
 	list-style-type: none;
 	direction: ltr;
 	clear: both;
+	width: 100%;
 }
 
 .roster-contact{
@@ -73,26 +74,11 @@ body{
 	text-align: left;
 	height: 1.5cm;
 	margin-right: 0;
-	margin-left: 1%;
+	margin-left: 0;
 }
-
 
 .roster-name{
 	margin: 0.5cm 0 0 0.5cm;
-}
-
-#person-info-wrapper{
-	height: 9%;
-	width:100%;
-	background-color: #005500;
-}
-
-#message-wrapper{
-	height: 83%;
-	width: 100%;
-	overflow: scroll;
-	background: #eeeeee;
-	direction: ltr;
 }
 
 .chat-message{
@@ -103,12 +89,17 @@ body{
 	margin-top:0.2cm;
 }
 
-.chat-text{
-	
+#person-status{
+	margin-right: 0.5cm;
+	margin-left: 0.5cm;
+	display: inline-block; 
 }
 
-.me{
-	
+#start-message{
+	height:100%;
+	width:100%;
+	text-align:center;
+	padding-top: 45%;
 }
 
 .offline{

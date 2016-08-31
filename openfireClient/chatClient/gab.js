@@ -170,11 +170,7 @@ var Gab = {
                 body = null;
             }
         } else {
-        	console.log("khodam body.text: "+body.text()+" **********************************");
             body = body.contents();
-            
-            console.log("khodam body3: "+body);
-            
             var span = $("<span></span>");
             body.each(function () {
                 if (document.importNode) {
