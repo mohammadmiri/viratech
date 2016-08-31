@@ -103,7 +103,7 @@ body{
 }
 
 .offline{
-	
+	color: #ff1a1a;
 }
 
 .away{
@@ -111,7 +111,7 @@ body{
 }
 
 .online{
-	
+	color: #66ff66;
 }
 
 

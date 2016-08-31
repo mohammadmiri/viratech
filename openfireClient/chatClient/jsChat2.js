@@ -16,7 +16,6 @@ var Gab = {
      */
     on_roster: function (iq) {
         $(iq).find('item').each(function () {
-        	console.log("in each function");
             var jid = $(this).attr('jid');
             var name = $(this).attr('name') || jid;
 
@@ -39,10 +38,6 @@ var Gab = {
         Gab.connection.send($pres());
     },
 
-   
-    /*
-     * should be find out by mohammad
-     */
     pending_subscriber: null,
 
     /*
@@ -126,11 +121,9 @@ var Gab = {
 
     
     /*
-     * called when a message should be send 
+     * called when a message received
      */
     on_message: function (message) {
-    	console.log("on_message");
-    	
         var full_jid = $(message).attr('from');
         var jid = Strophe.getBareJidFromJid(full_jid);
         var jid_id = Gab.jid_to_id(jid);
@@ -141,7 +134,6 @@ var Gab = {
 
         var composing = $(message).find('composing');
         if (composing.length > 0) {
-      	  console.log("isTyping");
       	  if(!$("#person-status").html()){
 	            $("#person-status").append(
 	                "<div class='chat-event'>" +
@@ -175,19 +167,13 @@ var Gab = {
         }
                 
         var person_jid = Strophe.getNodeFromJid(jid);
-        console.log("person_jid: "+person_jid);
-        console.log("person_jid2: "+$("#person-info-wrapper #person-jid").html().split("@")[0]);
         if(person_jid != $("#person-info-wrapper #person-jid").html().split("@")[0]){
-	      	console.log("message-wrapper should be clear");
 	      	$(".roster-contact").css("background-color", "#f4ebff");
 	      	$("#message-wrapper").empty();
 	      	var person_name;
 	      	$(".roster-contact").each(function(){
-	      		
 	      		if($(this).find(".roster-jid").html().split("@")[0] == person_jid){
-	      			console.log("in if each");
 	      			person_name = $(this).find(".roster-name").html();
-	      			console.log("person_name: "+person_name);
 	      		}
 	      	});
 	      	$("#person-info-wrapper #person-name").empty();
@@ -272,7 +258,6 @@ var Gab = {
  * called at first, when the page loaded
  */
 $(document).ready(function () {
-   console.log("in ready function");
     
     $(document).trigger('connect', {
         jid: 'miri@viradev.ir',
@@ -281,11 +266,8 @@ $(document).ready(function () {
 
     /*
      * called when the user click on one of roster in roster-list
-     * 
-     * should be modified later by mohammad
      */
     $('.roster-contact').live('click', function () {
-    	console.log("in roster-contact click" + $(this).html());
     	
     	$('#message-wrapper').empty();
     	$('.roster-contact').css("background-color","#f4ebff");
@@ -303,19 +285,25 @@ $(document).ready(function () {
         
     });
 
-    $('#roster-search-input').live('click', function() {
-    	
+    $('#roster-search-input').live('keyup', function(ev) {
+    	var typed_value = $(this).val();
+    	$('#roster-list li').each(function(){
+    		var person_name = $(this).find(".roster-name").html();
+    		if(person_name.toLowerCase().indexOf(typed_value.toLowerCase())>=0){
+    			$(this).removeClass("hidden");
+    		}
+    		else{
+    			$(this).addClass("hidden");
+    		}
+    	});
     });
     
     /*
      * called when the user start typing in input-chat
      * code 13 means the user pressed enter button
-     * 
-     * should be modified later by mohammad
      */
     $('#chat-input').live('keypress', function (ev) {
         var jid = $(this).data('jid');
-        console.log("in live chat-input: "+jid)
 
         if (ev.which === 13) {
             ev.preventDefault();
@@ -328,8 +316,6 @@ $(document).ready(function () {
                 .c('active', {xmlns: "http://jabber.org/protocol/chatstates"});
             Gab.connection.send(message);
             
-            console.log("msg: "+message);
-
             $("#message-wrapper").append(
                 "<div class='row msg_container base_sent'>" +
                 "<div class='messages msg_sent'>"+
@@ -341,28 +327,6 @@ $(document).ready(function () {
                 "<img src='http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg' class='img-responsive'>" +
                 "</div>" +
                 "</div>");
-
-            
-            
-//            
-//            <div class="row msg_container base_sent">
-//            <div class="messages msg_sent">
-//                <p>that mongodb thing looks good, huh?
-//                tiny master db, and huge document store
-//                this is main content you want and main thing you should use</p>
-//            </div>
-//            <div class="avatar">
-//                <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-//            </div>
-//        </div>
-//            
-            
-            
-            
-            
-            
-            
-            
             
             $(this).val('');
             $(this).parent().data('composing', false);
@@ -379,7 +343,7 @@ $(document).ready(function () {
     });
 
     /*
-     * called when the user click on disconnect button
+     * called when the client disconnected
      */
     $('#disconnect').click(function () {
         Gab.connection.disconnect();
@@ -392,12 +356,10 @@ $(document).ready(function () {
  * called when event connect occurred
  */
 $(document).bind('connect', function (ev, data) {
-	console.log("in connect bind");
 	
     var conn = new Strophe.Connection(
         'http://bosh.metajack.im:5280/xmpp-httpbind');
     
-
     conn.connect(data.jid, data.password, function (status) {
         if (status === Strophe.Status.CONNECTED) {
             $(document).trigger('connected');
@@ -410,10 +372,9 @@ $(document).bind('connect', function (ev, data) {
 });
 
 /*
- * called when the user connected to server 
+ * called when the client connected to server 
  */
 $(document).bind('connected', function () {
-	console.log("connected");
 	
     var iq = $iq({type: 'get'}).c('query', {xmlns: 'jabber:iq:roster'});
     Gab.connection.sendIQ(iq, Gab.on_roster);
@@ -426,7 +387,6 @@ $(document).bind('connected', function () {
 });
 
 $(document).bind('disconnected', function () {
-	console.log("disconnected");
 	
     Gab.connection = null;
     Gab.pending_subscriber = null;
